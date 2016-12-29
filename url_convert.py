@@ -1,6 +1,6 @@
 
-f = open('input_text.txt', 'r')
-f2 = open('out_put.txt','w')
+f = open('input.txt', 'r')
+f2 = open('output.txt','w')
 url_list = []
 i=0
 for line in f:
