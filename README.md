@@ -10,4 +10,6 @@
 5. output.txtの内容をコピーしてdownload.pyのurl_listに貼り付ける。
 6. download.pyのfirst_numberを指定してdownload.pyを実行するとダウンロードできる。
 
-###
+###注意
+input.txt,output.txtはgit管理に含めない。
+完全自動化できなくてごめんね。
