@@ -2,7 +2,7 @@ import cv2
 import urllib.request
 import numpy as np
 import time
-import  url_convert
+import url_convert
 def make_image(image_url,numbering):
     print(str(i)+" dowloading...")
     # URLの画像情報をロード
@@ -16,7 +16,7 @@ def make_image(image_url,numbering):
 
     # 新たな画像として書き出す
     first_number = 0 #連番一つ目のファイルの番号
-    cv2.imwrite("aragaki"+str(numbering+first_number)+".jpg", image)
+    cv2.imwrite("yamaga"+str(numbering+first_number)+".jpg", image)
 
 url_convert.url_convert()
 
@@ -30,4 +30,4 @@ f.close()
 print(url_list)
 for i in range(0,len(url_list)):
     make_image(url_list[i],i)
-    time.sleep(2)
+    time.sleep(1)

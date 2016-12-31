@@ -7,7 +7,6 @@ def url_convert():
         if(i%3==0):
             item = line.replace("\"","")
             print(item)
-            print("i")
             url_list.append(item)
             f2.write(item)
         i += 1
