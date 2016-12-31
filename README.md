@@ -17,3 +17,4 @@
 ###注意
 input.txt,output.txtはgit管理に含めない。
 完全自動化できなくてごめんね。
+seleniumDownloadは割とエラーはきます。10分おきくらいにチェックしてください。
