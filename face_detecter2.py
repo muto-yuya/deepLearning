@@ -34,9 +34,9 @@ def detect_face_rotate(img_file, base_dir, out_dir = 'out'):
     limit = 800
     if rows > limit or cols > limit:
         if rows > cols:
-            input_img = cv2.resize(input_img, (cols * limit / rows, limit))
+            input_img = cv2.resize(input_img, (int(cols * limit / rows), limit))
         else:
-            input_img = cv2.resize(input_img, (limit, rows * limit / cols))
+            input_img = cv2.resize(input_img, (limit, int(rows * limit / cols)))
         rows, cols, colors = input_img.shape
         print('resized', rows, cols)
 
@@ -250,5 +250,3 @@ def show(img):
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
-if __name__ == "__main__":
-    img = detect_face_rotate('ohtani58.jpg', '.', 'detect')
