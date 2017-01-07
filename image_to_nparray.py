@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 from make_face_extracted import checkFileNum
-person_name = "fujii"
+person_name = "other"
 
 def image_convert(filename):
     file = cv2.imread(filename)
@@ -14,5 +14,5 @@ for i in range(0,samples_length-1):
     img = image_convert(person_name+"_detected_learning/"+person_name+"_face"+str(i)+".jpg")
     print(img)
     image_array.append(img)
-
-np.save(person_name+"_face.npy",image_array)
+if __name__ == '__main__':
+    np.save(person_name+"_face.npy",image_array)

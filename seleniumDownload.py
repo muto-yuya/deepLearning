@@ -8,8 +8,8 @@ import time
 import url_convert
 
 
-person_name = "yamaga" #とってくる人の名前
-first_number = 0 #連番一つ目のファイルの番号
+person_name = "other" #とってくる人の名前
+first_number = 143 #連番一つ目のファイルの番号
 error_num=0
 
 
