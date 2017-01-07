@@ -8,7 +8,7 @@ import tensorflow as tf
 IMAGE_SIZE = 112
 INPUT_SIZE = 96
 DST_INPUT_SIZE = 56
-NUM_CLASS = 8
+NUM_CLASS = 5
 NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN = 500
 
 MEMBER_NAMES = {
@@ -55,11 +55,11 @@ def load_data(csv, batch_size, shuffle = True, distored = True):
     min_queue_examples = int(NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN * min_fraction_of_examples_in_queue)
 
     return _generate_image_and_label_batch(
-            image,
-            label,
-            filename,
-            min_queue_examples, batch_size,
-            shuffle=shuffle)
+        image,
+        label,
+        filename,
+        min_queue_examples, batch_size,
+        shuffle=shuffle)
 
 def _generate_image_and_label_batch(image, label, filename, min_queue_examples,
                                     batch_size, shuffle):
@@ -84,8 +84,7 @@ def _generate_image_and_label_batch(image, label, filename, min_queue_examples,
             capacity=min_queue_examples + 3 * batch_size)
 
     # Display the training images in the visualizer.
-    tf.summary.image('image', images, max_outputs = 100)
+    tf.image_summary('image', images, max_images = 100)
 
     labels = tf.reshape(label_batch, [batch_size, NUM_CLASS])
     return images, labels, filename
-
