@@ -15,6 +15,8 @@ def main(ckpt_path, csv = 'test2.txt'):
 
         logits = mcz_model.inference_deep(images, keep_prob, mcz_input.DST_INPUT_SIZE, mcz_input.NUM_CLASS)
         acc = mcz_model.accuracy(logits, labels)
+        sess = tf.Session()
+        #print("logits: ",sess.run(logits))
 
         saver = tf.train.Saver()
         sess = tf.Session()
@@ -24,10 +26,10 @@ def main(ckpt_path, csv = 'test2.txt'):
 
         acc_res, filename_res, actual_res, expect_res = sess.run([acc, filename, logits, labels], feed_dict={keep_prob: 1.0})
         print('accuracy', acc_res)
-        return
 
         goods = []
         bads = []
+        print(actual_res)
         for idx, (act, exp) in enumerate(zip(actual_res, expect_res)):
             if np.argmax(act) == np.argmax(exp):
                 goods.append(filename_res[idx])
@@ -41,9 +43,11 @@ def main(ckpt_path, csv = 'test2.txt'):
             print('cp',f,'out_bads')
         #correct_prediction = tf.equal(tf.argmax(logits, 1), tf.argmax(labels, 1))
 
+        return
+
 
 if __name__ == '__main__':
-    ckpt_path = '/tmp/data.2017-01-06T05:58:32.789275/model.ckpt-3000' #sys.argv[1]
+    ckpt_path = '/tmp/data.2017-01-10T00:13:28.209623/model.ckpt-0' #sys.argv[1]
     #csv = sys.argv[2]
     #print ckpt_path
     main(ckpt_path)

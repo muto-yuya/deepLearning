@@ -6,8 +6,8 @@ import numpy as np
 import tensorflow as tf
 
 IMAGE_SIZE = 112
-INPUT_SIZE = 96
-DST_INPUT_SIZE = 56
+INPUT_SIZE = 112
+DST_INPUT_SIZE = 112
 NUM_CLASS = 8
 NUM_EXAMPLES_PER_EPOCH_FOR_TRAIN = 120
 

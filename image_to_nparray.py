@@ -10,7 +10,6 @@ def image_convert(filename):
 samples_length = checkFileNum(person_name+"_detected_learning")
 image_array=[]
 for i in range(0,samples_length-1):
-    print(samples_length)
     img = image_convert(person_name+"_detected_learning/"+person_name+"_face"+str(i)+".jpg")
     print(img)
     image_array.append(img)

@@ -30,7 +30,7 @@ def detect_face_rotate(img_file, base_dir, out_dir = 'out'):
     input_img = cv2.imread(img_file)
     rows, cols, colors = input_img.shape
 
-    print('size', rows, cols)
+    #print('size', rows, cols)
     limit = 800
     if rows > limit or cols > limit:
         if rows > cols:
@@ -38,7 +38,7 @@ def detect_face_rotate(img_file, base_dir, out_dir = 'out'):
         else:
             input_img = cv2.resize(input_img, (limit, int(rows * limit / cols)))
         rows, cols, colors = input_img.shape
-        print('resized', rows, cols)
+        #print('resized', rows, cols)
 
     gray = cv2.cvtColor(input_img, cv2.COLOR_BGR2GRAY)
     hypot = int(math.hypot(rows, cols))
@@ -50,7 +50,7 @@ def detect_face_rotate(img_file, base_dir, out_dir = 'out'):
     #5度ずつ元画像を回転し、顔の候補を全部取得
     #for deg in range(-50, 51, 5):
     for deg in range(-5, 5, 5):
-        print('deg:%s' % deg)
+        #print('deg:%s' % deg)
         M = cv2.getRotationMatrix2D((hypot * 0.5, hypot * 0.5), -deg, 1.0)
         rotated = cv2.warpAffine(frame, M, (hypot, hypot))
         #"""
@@ -67,11 +67,11 @@ def detect_face_rotate(img_file, base_dir, out_dir = 'out'):
             origin = (int(hypot * 0.5), int(hypot * 0.5))
             r_deg = -deg
             center_org = rotate_coord(center, origin, r_deg)
-            print('face', (x,y,w,h), center_org)
+            #print('face', (x,y,w,h), center_org)
 
             resized =(face_cand)
             if w < IMAGE_SIZE:
-                print('resizing..')
+                #print('resizing..')
                 resized = cv2.resize(face_cand, (IMAGE_SIZE, IMAGE_SIZE))
 
             result = {
@@ -94,34 +94,34 @@ def detect_face_rotate(img_file, base_dir, out_dir = 'out'):
     eyes_faces = []
 
     for result in results:
-        print('#eyes:',result['face_id'])
+        #print('#eyes:',result['face_id'])
 
         img = np.copy(result["img_resized"])
         fw,fh = img.shape
         eyes = eye_cascade.detectMultiScale(img, 1.02)
         left_eye = right_eye = None #左上/右上にそれぞれ目が１つずつ検出できればOK
         for (x,y,w,h) in eyes:
-            print('## eye:',x,y,w,h,fw/8,fw/4,fh/8,fh/4)
+            #print('## eye:',x,y,w,h,fw/8,fw/4,fh/8,fh/4)
             cv2.rectangle(img,(x,y),(x+w,y+h),(64,64,0),1)
 
             if not (fw/6 < w and w < fw/2):
-                print('eye width invalid')
+                #print('eye width invalid')
                 continue
             if not (fh/6 < h and h < fh/2):
-                print('eye height invalid')
+                #print('eye height invalid')
                 continue
             if not fh * 0.5 - (y + h * 0.5) > 0: #上半分に存在する
-                print('eye position invalid')
+                #print('eye position invalid')
                 continue
             if fw * 0.5 - (x + w * 0.5) > 0:
                 if left_eye:
-                    print('too many left eye')
+                    #print('too many left eye')
                     continue
                 else:
                     left_eye = (x,y,w,h)
             else:
                 if right_eye:
-                    print('too many right eye')
+                    #print('too many right eye')
                     continue
                 else:
                     right_eye = (x,y,w,h)
@@ -130,7 +130,7 @@ def detect_face_rotate(img_file, base_dir, out_dir = 'out'):
         #cv2.imwrite(out_file, img)
         #"""
         if left_eye and right_eye:
-            print('>>> valid eyes detect')
+            #print('>>> valid eyes detect')
             result['left_eye'] = left_eye
             result['right_eye'] = right_eye
             eyes_faces.append(result)
@@ -147,8 +147,8 @@ def detect_face_rotate(img_file, base_dir, out_dir = 'out'):
             if abs(c_x - r_x) < ((cw+rw)*0.5*0.3) and abs(c_y - r_y) < ((ch+rh)*0.5*0.3): #近い場所にある顔候補
                 c_diff = eyes_vertical_diff(cand)
                 r_diff = eyes_vertical_diff(result)
-                print('c_diff:',cand['face_id'],c_diff)
-                print('r_diff:',result['face_id'],r_diff)
+                #print('c_diff:',cand['face_id'],c_diff)
+                #print('r_diff:',result['face_id'],r_diff)
                 if c_diff < r_diff: #より左右の目の水平位置が近いほうが採用
                     result['duplicated'] = True
                 else:
@@ -170,10 +170,10 @@ def detect_face_rotate(img_file, base_dir, out_dir = 'out'):
         mouthes = mouth_cascade.detectMultiScale(img, 1.02) #faceの中心下部付近にあればOK
         mouth_found = True
         for (mx,my,mw,mh) in mouthes:
-            print('mouth',(mx,my,mw,mh))
+            #print('mouth',(mx,my,mw,mh))
             cv2.rectangle(img,(mx,my),(mx+mw,my+mh),(128,128,0),2)
             h_diff = fh/2 - (my+mh/2)
-            print(fh, h_diff)
+            #print(fh, h_diff)
             if h_diff < 0:
                 mouth_found = True
                 break
@@ -181,7 +181,7 @@ def detect_face_rotate(img_file, base_dir, out_dir = 'out'):
         out_file = '%s/mouth_%s_face_%s_%s.jpg' % (img_dir, item['face_id'], item['deg'], item['center_org'])
         #cv2.imwrite(out_file, img)
         #"""
-        print(item['face_id'], 'mouth found?', mouth_found)
+        #print(item['face_id'], 'mouth found?', mouth_found)
         if mouth_found:
             finals.append(item)
             out_file1 = '%s/final_%s_%s_%s_%s.jpg' % (out_dir, fn, item['face_id'], item['deg'], item['center_org'])
@@ -217,7 +217,7 @@ def crop_color_face(item, img, base_dir, out_dir, fn):
     #"""
     web_path = '%s/%s_%s.jpg' % (out_dir, fn, item['face_id'])
     out_file = '%s/%s' % (base_dir, web_path)
-    print('web_path', web_path)
+    #print('web_path', web_path)
     print('out_file', out_file)
     cv2.imwrite(out_file, face)
     #"""

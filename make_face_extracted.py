@@ -1,4 +1,4 @@
-import face_detecter2
+import face_detector2
 import os
 
 
@@ -15,7 +15,7 @@ def checkFileNum(path):
 def face_extract(person_name,first_num):
     print("file number:",checkFileNum(person_name)-1)
     for i in range(first_num,checkFileNum(person_name)-1):
-        face_detecter2.detect_face_rotate(person_name+"/"+person_name+str(i)+".jpg",'.',person_name+'_detected')
+        face_detecter2.detect_face_rotate(person_name+"_detected_learning"+"/"+person_name+str(i)+".jpg",'.',person_name+'_detected_compare')
 
 if __name__ == '__main__':
-    face_extract("other",0)
+    face_extract("ishida",0)

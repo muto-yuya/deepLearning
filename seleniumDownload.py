@@ -9,7 +9,7 @@ import url_convert
 
 
 person_name = "other" #とってくる人の名前
-first_number = 143 #連番一つ目のファイルの番号
+first_number = 647 #連番一つ目のファイルの番号
 error_num=0
 
 
